@@ -18,7 +18,7 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/ctdlog">
+      <a href="https://github.com/bhh9860">
         <div>Jeong Hyeon Tang</div>
       </a>
     </td>
