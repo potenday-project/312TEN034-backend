@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
