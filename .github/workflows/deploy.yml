@@ -8,11 +8,14 @@ jobs:
     name: Deploy Node.js Application
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -26,7 +29,5 @@ jobs:
                 whoami
                 cd /root/312TEN034-backend
                 git pull origin main
-                nvm install v16.20.2
-                nvm use v16.20.2
                 npm install --force
                 pm2 restart 0
