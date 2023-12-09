@@ -26,8 +26,6 @@ jobs:
                 whoami
                 cd /root/312TEN034-backend
                 git pull origin main
-                ln -s /root/.nvm/nvm.sh /root/nvm.sh
-                source /root/nvm.sh
                 nvm install v16.20.2
                 nvm use v16.20.2
                 npm install --force
