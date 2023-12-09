@@ -13,11 +13,6 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -27,7 +22,12 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             whoami
-            cd /root/312TEN034-backend
-            git pull origin main
-            npm install --force
-            pm2 restart 0
+            script: |
+                whoami
+                cd /root/312TEN034-backend
+                git pull origin main
+                ln -s /root/.nvm/nvm.sh /root/nvm.sh
+                source /root/nvm.sh
+                nvm use v16.20.2
+                npm install --force
+                pm2 restart 0
