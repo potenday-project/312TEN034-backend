@@ -1,4 +1,4 @@
-name: remote ssh command
+name: Backend CI/CD
 on:
   push:
     branches:
@@ -7,7 +7,17 @@ jobs:
   build:
     name: Deploy Node.js Application
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -19,7 +29,5 @@ jobs:
             whoami
             cd /root/312TEN034-backend
             git pull origin main
-            nvm use v16.20.2
             npm install --force
-            npm install -g pm2
             pm2 restart 0
