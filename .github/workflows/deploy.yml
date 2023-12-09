@@ -28,4 +28,4 @@ jobs:
                 npx pm2 kill
                 git pull origin main
                 npm install 
-                npm run start
+                npm run start:prod
