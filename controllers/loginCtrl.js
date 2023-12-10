@@ -8,7 +8,7 @@ const { userKakaoIdFind } = require('../models/userKakaoIdFind'); // DB에 저�
 const { userRegister } = require('../models/userRegister'); // 유저 회원가입
 
 const loginCtrl = async (req, res, next) => {
-  const token = 'Rt2_1A6ueSVMJQRCmwTuwfuoVyj-dTPE47AKPXObAAABjFGFBgJONYg--5I0Sw'; // 카카오 토큰
+  const token = 'KQJULp2NnIzuEDdD7Ci-4U0XGu2f6LgO1HEKPXUaAAABjFJYjuBONYg--5I0Sw'; // 카카오 토큰
 
   // 유저 회원정보
   const userKakaoResult = await signInKakao(`${token}`); // 카카오 사용자 정보
