@@ -1,3 +1,5 @@
+// 받은 카카오 아이디로 DB조회 후 결과 반환 함수
+
 const mysql = require('mysql2/promise');
 const pool = require('./pool');
 

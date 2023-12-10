@@ -1,3 +1,4 @@
+// 카카오 유저정보 DB에 저장(회원가입)
 const mysql = require('mysql2/promise');
 const pool = require('./pool');
 

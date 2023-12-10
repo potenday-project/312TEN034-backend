@@ -1,4 +1,4 @@
-// userModel.js
+// DB의 전체 유저 정보 가져오는 함수
 const mysql = require('mysql2/promise');
 const pool = require('./pool');
 
