@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
-const axios = require('axios');
+const express = require('express');
 
-const loginCtrl = require('../controllers/loginCtrl');
+const router = express.Router();
 
-router.get('/users', loginCtrl.loginCtrl); // 카카오로 유저 회원가입, 로그인
+router.get('/', (req, res, next) => {
+  res.send('Hello, World!');
+});
 
 module.exports = router;
