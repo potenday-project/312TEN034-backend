@@ -12,7 +12,7 @@ const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
