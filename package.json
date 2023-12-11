@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "start:prod": "pm2 start ./bin/www"
+    "start": "nodemon app.js",
+    "start:prod": "pm2 start app.js`"
   },
   "dependencies": {
     "axios": "^1.6.2",

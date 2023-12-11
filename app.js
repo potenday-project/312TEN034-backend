@@ -4,10 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
 
 const app = express();
+const port = process.env.PORT || 8080;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,8 +39,8 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(8080, () => {
-  console.log('Server is running on port 8080...');
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}...`);
 });
 
 module.exports = app;
