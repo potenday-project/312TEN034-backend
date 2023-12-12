@@ -14,46 +14,113 @@ const { userController } = require('../controllers/userController');
 /**
  * @swagger
  * paths:
- *  /users/:
- *    get:
- *      summary: "유저 데이터 전체조회"
- *      description: "서버에 데이터를 보내지 않고 Get방식으로 요청"
- *      tags: [Users]
- *      responses:
- *        "200":
- *          description: 전체 유저 정보
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                    success:
- *                      type: boolean
- *                    message:
- *                      type: string
- *                    users:
- *                      type: array
- *                      example:
- *                          [
- *                            {"id":1,"nickname":"hi","provider":"KAKAO","provider_id":"1235234","champion":"CHAMP1","is_deleted":0,"created_at":"2023-12-12T09:11:44.000Z","updated_at":"2023-12-12T09:11:44.000Z"},
- *                          ]
+ *  /users/signIn:
+ *      post:
+ *          tags: [Users]
+ *          summary: "로그인(토큰 생성)"
+ *          description: "카카오 access토큰 확인 뒤 token 생성"
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          example : {"accessToken": "7dpQgQXPMskR78asdfaefabaaef3xw"}
+ *                          properties:
+ *                              accessToken:
+ *                                  type: string
+ *                                  description: "카카오 access 토큰"
+ *          responses:
+ *              "200":
+ *                  description: "JWT토큰 생성 요청에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ *                                  data:
+ *                                      type: object
+ *                                      properties:
+ *                                          token:
+ *                                              type: string
+ *                                              description: "토큰"
+ *              "401":
+ *                  description: "provider_id가 DB에 없어 회원가입 필요, JWT토큰 생성 불가. 요청에 실패했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                      example: False
+ *                                  message:
+ *                                      type: string
+ *                                  err:
+ *                                      type: object
+ *                                      properties:
+ *                                          error:
+ *                                              type: string
+ *                                              description: "에러메세지"
+ *
+ *
  */
-router.get('/', userController.getUsers);
-
-// /**
-//  * @swagger
-//  * paths:
-//  *  /users/signIn:
-//  *      post:
-//  *          summary: "카카오 로그인"
-//  *          description: "카카오 토큰 확인 뒤 가입되지 않은 유저이면 회원가입 후 로그인"
-//  *          tag: [Users]
-//  *          requestBody:
-//  *
-//  */
-
+// useres/signIn
 router.post('/signIn', userController.signIn);
+/**
+ * @swagger
+ * paths:
+ *   /users/signUp:
+ *     post:
+ *       tags: [Users]
+ *       summary: "회원가입"
+ *       description: "회원가입(nickname, provider_id, champion 값 필요), champion 값은 CHAMP1, CHAMP2, CHAMP3, CHAMP4, CHAMP5 중 하나여야 함"
+ *       requestBody:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example: {"nickname": "닉네임", "provider_id": "123456789", "champion": "CHAMP1"}
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 description: "닉네임"
+ *               provider_id:
+ *                 type: string
+ *                 description: "카카오 provider_id"
+ *               champion:
+ *                 type: string
+ *                 description: "챔피언 이름(CHAMP1, CHAMP2, CHAMP3, CHAMP4, CHAMP5)"
+ *       responses:
+ *         "201":
+ *           description: "회원가입 요청에 성공했습니다."
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   message:
+ *                     type: string
+ *         "400":
+ *           description: "회원가입 요청에 실패했습니다."
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                     example: False
+ *                   message:
+ *                     type: string
+ */
 
-router.post('/');
+// users/singUp
+router.post('/signUp', userController.signUp);
 
 module.exports = router;

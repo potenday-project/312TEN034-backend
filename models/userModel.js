@@ -1,11 +1,12 @@
 const { pool } = require('./pool');
 
 const userModel = {
-  getUsers: async () => {
+  // 토큰 정보의 provider_id DB조회
+  getUserByproviderId: async (provider_id) => {
     const connection = await pool.getConnection();
 
     try {
-      const [rows, fields] = await connection.query('SELECT * FROM member');
+      const [rows, fields] = await connection.query('SELECT * FROM member WHERE provider_id = ?', provider_id);
 
       return rows;
     } finally {
@@ -13,31 +14,21 @@ const userModel = {
     }
   },
 
-  getUserByKakaoId: async (kakaoId) => {
+  signUp: async (userData) => {
     const connection = await pool.getConnection();
 
-    try {
-      const [rows, fields] = await connection.query('SELECT * FROM member WHERE kakao_id = ?', kakaoId);
-
-      return rows;
-    } finally {
-      connection.release();
-    }
-  },
-
-  userRegister: async (userKakaoResult) => {
-    const connection = await pool.getConnection();
-
-    const { id: kakao_id, email, nickname, profile_image } = userKakaoResult;
+    const { nickname, provider_id, champion } = userData;
 
     try {
       const [rows, fields] = await connection.query(
-        `INSERT INTO member (kakao_id, email, nickname, profile_image) VALUES (${kakao_id}, '${email}', '${nickname}','${profile_image}');`
+        `INSERT INTO member (nickname, provider, provider_id, champion) VALUES ('${nickname}', 'KAKAO', '${provider_id}', '${champion}');`
       );
-      console.log('회원가입 성공');
-      return rows;
+      return {
+        success: true,
+        message: '회원가입 요청에 성공했습니다',
+      };
     } catch (err) {
-      console.log('회원가입 오류', err);
+      return { success: false, message: '회원가입 요청에 실패했습니다.', err };
     } finally {
       connection.release();
     }
