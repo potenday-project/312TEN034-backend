@@ -21,6 +21,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', userRouter);
 app.use('/', indexRouter);
 
+const { swaggerUi, specs } = require('./swagger/swagger');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+/**
+ * 파라미터 변수 뜻
+ * req : request 요청
+ * res : response 응답
+ */
+
+/**
+ * @path {GET} http://localhost:3000/
+ * @description 요청 데이터 값이 없고 반환 값이 있는 GET Method
+ */
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

@@ -1,4 +1,6 @@
 const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { userService } = require('../services/userService');
 
@@ -15,9 +17,10 @@ const userController = {
   signIn: async (req, res) => {
     const result = await axios.get('https://kapi.kakao.com/v2/user/me', {
       headers: {
-        Authorization: `Bearer ${kakaoToken}`,
+        Authorization: `Bearer ${process.env.KaKao_Tokken}`,
       },
     });
+    res.json({ a: result.data });
 
     return result.data;
   },

@@ -9,15 +9,6 @@ const userService = {
 
     return result;
   },
-  signInKakao: async (kakaoToken) => {
-    const result = await axios.get('https://kapi.kakao.com/v2/user/me', {
-      headers: {
-        Authorization: `Bearer ${kakaoToken}`,
-      },
-    });
-
-    return result.data;
-  },
 };
 
 module.exports = {
