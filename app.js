@@ -4,12 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const dotenv = require('dotenv');
-
-dotenv.config();
-
 const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
+
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
