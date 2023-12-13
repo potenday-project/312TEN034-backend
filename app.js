@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,6 +12,8 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
