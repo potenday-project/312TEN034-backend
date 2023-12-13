@@ -13,7 +13,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
