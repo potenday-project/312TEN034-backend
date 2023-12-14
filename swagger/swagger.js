@@ -27,7 +27,7 @@ const options = {
     ],
     servers: [
       {
-        url: process.env.SERVER_URL, // 요청 URL
+        url: 'http://localhost:3000', // 요청 URL
       },
     ],
   },
