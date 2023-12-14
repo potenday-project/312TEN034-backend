@@ -4,6 +4,7 @@ dotenv.config();
 
 const { userService } = require('../services/userService');
 const { getUserInfoFromKakao } = require('../lib/kakao');
+const { getUserIdFromJwt } = require('../utils/jwt');
 
 const userController = {
   signIn: async (req, res) => {
@@ -65,13 +66,12 @@ const userController = {
     }
   },
 
-  // 유저 프로필 조회
   getUserProfile: async (req, res) => {
-    const { id } = req.params;
+    const { id } = getUserIdFromJwt(req.headers.authorization);
 
-    // const result = await userService.getUserProfile(id);
+    const result = await userService.getUserProfile(id);
 
-    // return res.status(200).json({ result: result });
+    return res.status(200).json({ result });
   },
 };
 

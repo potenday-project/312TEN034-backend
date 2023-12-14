@@ -114,8 +114,8 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  *  /challenges/in-progress/{id}:
  *      get:
  *          tags: [Challenges]
- *          summary: "진행 중인 챌린지 조회"
- *          description: "진행 중인 챌린지 조회"
+ *          summary: "진행 중인 챌린지의 진행 상태 조회"
+ *          description: "진행 중인 챌린지의 진행 상태 조회"
  *          parameters:
  *             - in: path
  *               name: id
@@ -123,7 +123,7 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  *               description: "챌린지 아이디"
  *          responses:
  *              "200":
- *                  description: "챌린지 조회 요청에 성공했습니다."
+ *                  description: "진행 중인 챌린지의 진행 상태 조회 요청에 성공했습니다."
  *                  content:
  *                      application/json:
  *                          schema:
@@ -134,11 +134,19 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  *                                  message:
  *                                      type: string
  *                                  data:
- *                                      type: object
- *                                      properties:
- *                                          challengeId:
- *                                              type: number
- *                                              description: "챌린지 아이디"
+ *                                      type: array
+ *                                      items:
+ *                                        type: object
+ *                                        properties:
+ *                                          champion:
+ *                                             type: number
+ *                                             description: "유저의 챔피언"
+ *                                          id:
+ *                                             type: number
+ *                                             description: "유저 아이디"
+ *                                          count:
+ *                                            type: number
+ *                                            description: "챌린지 인증 횟수"
  */
 router.get('/in-progress/:id', challengeController.getInProgressChallenge);
 

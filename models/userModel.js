@@ -33,6 +33,14 @@ const userModel = {
       connection.release();
     }
   },
+
+  getUserProfile: async (id) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query('SELECT * FROM member WHERE id = ?', id);
+
+    return rows;
+  },
 };
 
 module.exports = {
