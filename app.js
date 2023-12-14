@@ -10,6 +10,7 @@ const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
 const challengeRouter = require('./routes/challengeRouter');
 const badgeRouter = require('./routes/badgeRouter');
+const alarmRouter = require('./routes/alarmRouter');
 const s3Router = require('./routes/s3Router');
 
 require('dotenv').config();
@@ -33,7 +34,7 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/challenges', challengeRouter);
 app.use('/badges', badgeRouter);
-
+app.use('/alarms', alarmRouter);
 app.use('/s3', s3Router);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
