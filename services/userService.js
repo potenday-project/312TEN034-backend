@@ -48,6 +48,12 @@ const userService = {
 
     return result;
   },
+
+  getUserProfile: async (id) => {
+    const result = await userModel.getUserProfile(id);
+
+    return result;
+  },
 };
 
 module.exports = {

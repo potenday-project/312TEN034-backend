@@ -68,8 +68,8 @@ const { userController } = require('../controllers/userController');
  *
  *
  */
-// users/signIn
 router.post('/signIn', userController.signIn);
+
 /**
  * @swagger
  * paths:
@@ -119,8 +119,29 @@ router.post('/signIn', userController.signIn);
  *                   message:
  *                     type: string
  */
-
-// users/singUp
 router.post('/signUp', userController.signUp);
+
+/**
+ * @swagger
+ * paths:
+ *    /users:
+ *      get:
+ *          tags: [Users]
+ *          summary: "유저 프로필 조회"
+ *          description: "유저 프로필 조회"
+ *          responses:
+ *              "200":
+ *                  description: "유저 프로필 조회에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ */
+router.get('/', userController.getUserProfile);
 
 module.exports = router;
