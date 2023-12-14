@@ -52,6 +52,16 @@ const challengeCertificationModel = {
 
     return rows;
   },
+
+  findAuthenticateImageUrlByChallengeCertificationId: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query(
+      `SELECT authenticate_image_url FROM challenge_certification WHERE id = ${challengeCertificationId}`
+    );
+
+    return rows;
+  },
 };
 
 module.exports = {
