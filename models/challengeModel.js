@@ -29,6 +29,20 @@ const challengeModel = {
     );
     return rows;
   },
+
+  getUpcomingChallenge: async ({ challengeId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
+    return rows;
+  },
+
+  getInProgressChallenge: async ({ challengeId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
+    return rows;
+  },
 };
 
 module.exports = {
