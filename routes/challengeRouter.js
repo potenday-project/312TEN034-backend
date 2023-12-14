@@ -150,4 +150,6 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  */
 router.get('/in-progress/:id', challengeController.getInProgressChallenge);
 
+router.post('/submit', challengeController.submitImage);
+
 module.exports = router;
