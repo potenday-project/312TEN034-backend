@@ -2,9 +2,9 @@ const { challengeModel } = require('../models/challengeModel');
 const { challengeParticipantModel } = require('../models/challengeParticipantModel');
 const { challengeCertificationModel } = require('../models/challengeCertificationModel');
 const { memberModel } = require('../models/memberModel');
-const { S3Client } = require('@aws-sdk/clients/s3');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
 
 const s3 = new S3Client({
   region: 'ap-northeast-2',
