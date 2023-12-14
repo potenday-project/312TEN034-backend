@@ -2,27 +2,6 @@ const { challengeModel } = require('../models/challengeModel');
 const { challengeParticipantModel } = require('../models/challengeParticipantModel');
 const { challengeCertificationModel } = require('../models/challengeCertificationModel');
 const { memberModel } = require('../models/memberModel');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const { S3Client } = require('@aws-sdk/client-s3');
-
-const s3 = new S3Client({
-  region: 'ap-northeast-2',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'dodals3',
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString());
-    },
-  }),
-});
 
 const challengeService = {
   createChallenge: async ({ userId, name, category, authenticationMethod, reward, targetCount }) => {
@@ -117,16 +96,21 @@ const challengeService = {
 
   submitImage: async (req, res) => {
     try {
-      upload.single('image')(req, res, (err) => {
-        if (err) {
-          return res.status(500).json({ success: false, err: err });
-        }
+      const fileUrl = req.file.location;
 
-        const IMG_URL = req.file.location;
-        return res.json({ success: true, data: IMG_URL });
-      });
-    } catch (err) {
-      return res.status(500).json({ success: false, err: err });
+      console.log(fileUrl);
+
+      return {
+        success: true,
+        message: '이미지 업로드에 성공했습니다.',
+        data: fileUrl,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: '이미지 업로드에 실패했습니다.',
+        err: error,
+      };
     }
   },
 
@@ -149,13 +133,20 @@ const challengeService = {
     }
   },
 
-  submitChallenge: async ({ memberId, challengeId, imageUrl, is_authenticate }) => {
+  createChallengeCertification: async ({
+    memberId,
+    challengeId,
+    authenticateImageUrl,
+    is_authenticate,
+    participationCount,
+  }) => {
     try {
-      const result = await challengeCertificationModel.submitChallenge({
+      const result = await challengeCertificationModel.createChallengeCertification({
         memberId,
         challengeId,
-        imageUrl,
+        authenticateImageUrl,
         is_authenticate,
+        participationCount,
       });
 
       return {

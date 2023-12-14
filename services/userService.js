@@ -17,7 +17,7 @@ const userService = {
 
     const key = process.env.JWT_SECRET_KEY;
     console.log('토큰생성시작', key);
-    const expiresIn = '10d'; //토큰 유효 기간
+    const expiresIn = '30d'; //토큰 유효 기간
 
     const token = jwt.sign(
       {
