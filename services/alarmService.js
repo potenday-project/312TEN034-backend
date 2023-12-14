@@ -29,6 +29,22 @@ const alarmService = {
 
     return result;
   },
+
+  approveChallengeCertification: async ({ challengeCertificationId }) => {
+    const result = await challengeCertificationModel.approveChallengeCertification({
+      challengeCertificationId,
+    });
+
+    return result;
+  },
+
+  rejectChallengeCertification: async ({ challengeCertificationId }) => {
+    const result = await challengeCertificationModel.rejectChallengeCertification({
+      challengeCertificationId,
+    });
+
+    return result;
+  },
 };
 
 module.exports = {
