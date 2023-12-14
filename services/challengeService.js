@@ -117,8 +117,6 @@ const challengeService = {
 
   submitImage: async (req, res) => {
     try {
-      // 이미지 업로드 미들웨어를 사용
-      //s3, upload 정보는 최상단에 선언
       upload.single('image')(req, res, (err) => {
         if (err) {
           return res.status(500).json({ success: false, err: err });

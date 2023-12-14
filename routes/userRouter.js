@@ -8,7 +8,6 @@ const { userController } = require('../controllers/userController');
  * @swagger
  * tags:
  *   name: Users
- *   description: 유저 추가 수정 삭제 조회
  */
 
 /**
@@ -129,6 +128,13 @@ router.post('/signUp', userController.signUp);
  *          tags: [Users]
  *          summary: "유저 프로필 조회"
  *          description: "유저 프로필 조회"
+ *          parameters:
+ *            - name: "Authorization"
+ *              in: "header"
+ *              description: "Access Token"
+ *              required: true
+ *              schema:
+ *                type: "string"
  *          responses:
  *              "200":
  *                  description: "유저 프로필 조회에 성공했습니다."
