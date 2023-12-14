@@ -1,4 +1,5 @@
 const { challengeService } = require('../services/challengeService');
+const { alarmService } = require('../services/alarmService');
 const { getUserIdFromJwt } = require('../utils/jwt');
 
 const challengeController = {
@@ -133,6 +134,8 @@ const challengeController = {
           participationCount,
         });
 
+        // TODO: 재인증 요청 알람을 상대방에게 전송한다.
+
         if (submitResult.success) {
           // 재인증 요청이므로 마지막 인증 요청의 participation_count로 그대로 만들고, is_authenticate를 NULL로 넣고 생성한다.
           return res.status(200).json({
@@ -159,6 +162,8 @@ const challengeController = {
           is_authenticate: null,
           participationCount: participationCount + 1,
         });
+
+        // TODO: 새로운 인증 요청 알람을 상대방에게 전송한다.
 
         if (submitResult.success) {
           // 새로운 인증 요청이므로 participation_count를 1 증가시키고, is_authenticate를 NULL로 넣고 생성한다.

@@ -56,21 +56,21 @@ const upload = multer({
  *               success: false
  *               message: '이미지 업로드에 실패했습니다.'
  */
-router.post('/upload', upload.single('file'), (req, res) => {
-  try {
-    const fileUrl = req.file.location;
-    res.status(200).json({
-      success: true,
-      message: '이미지 업로드에 성공했습니다.',
-      data: fileUrl,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({
-      success: false,
-      message: '이미지 업로드에 실패했습니다.',
-    });
-  }
-});
+// router.post('/upload', upload.single('file'), (req, res) => {
+//   try {
+//     const fileUrl = req.file.location;
+//     res.status(200).json({
+//       success: true,
+//       message: '이미지 업로드에 성공했습니다.',
+//       data: fileUrl,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(400).json({
+//       success: false,
+//       message: '이미지 업로드에 실패했습니다.',
+//     });
+//   }
+// });
 
 module.exports = router;
