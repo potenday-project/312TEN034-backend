@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const { userService } = require('../services/userService');
+const { getUserInfoFromKakao } = require('../lib/kakao');
 
 const userController = {
   signIn: async (req, res) => {
@@ -10,17 +11,12 @@ const userController = {
     // 1. 토큰 정보 받아오기(실패시 오류) -> 2. 토큰 정보의 provider_id DB조회 -> 3. provider_id가 없으면 회원가입 후 로그인(있으면 바로 로그인)
     try {
       // 1. 토큰 정보 받아오기
-      const result = await axios.get('https://kapi.kakao.com/v2/user/me', {
-        headers: {
-          // Authorization: `Bearer ${process.env.KaKao_Tokken}`,
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const provider_id = result.data.id;
+      const {
+        data: { id: provider_id },
+      } = getUserInfoFromKakao({ accessToken });
 
       // 2. 토큰 정보의 provider_id DB조회
-      const userData = await userService.getUserByproviderId(provider_id);
+      const userData = await userService.getUserByProviderId(provider_id);
       console.log(provider_id);
 
       // 3.provider_id가 있으면 토큰만듦(없으면 null)
@@ -56,9 +52,16 @@ const userController = {
   signUp: async (req, res) => {
     const result = await userService.signUp(req.body);
     if (result.success) {
-      return res.status(201).json({ result: result.result });
+      return res.status(201).json({
+        success: true,
+        message: '회원가입 요청에 성공했습니다.',
+      });
     } else {
-      return res.status(400).json({ result: result.result });
+      return res.status(400).json({
+        success: false,
+        message: '회원가입 요청에 실패했습니다.',
+        err: result.err.message,
+      });
     }
   },
 

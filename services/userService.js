@@ -1,10 +1,11 @@
+const { getUserInfoFromKakao } = require('../lib/kakao');
 const { userModel } = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 const userService = {
   // 토큰 정보의 provider_id DB조회
-  getUserByproviderId: async (provider_id) => {
-    const result = await userModel.getUserByproviderId(provider_id);
+  getUserByProviderId: async (provider_id) => {
+    const result = await userModel.getUserByProviderId(provider_id);
 
     return result;
   },
@@ -18,7 +19,7 @@ const userService = {
     console.log('토큰생성시작', key);
     const expiresIn = '10d'; //토큰 유효 기간
 
-    let token = jwt.sign(
+    const token = jwt.sign(
       {
         id,
         nickname,
@@ -40,9 +41,15 @@ const userService = {
 
   // 회원가입
   signUp: async (userData) => {
-    const result = await userModel.signUp(userData);
+    const {
+      data: { id: provider_id },
+    } = await getUserInfoFromKakao(userData);
+    const result = await userModel.signUp({
+      ...userData,
+      provider_id,
+    });
 
-    return { result };
+    return result;
   },
 };
 

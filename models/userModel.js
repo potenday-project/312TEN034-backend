@@ -2,7 +2,7 @@ const { pool } = require('./pool');
 
 const userModel = {
   // 토큰 정보의 provider_id DB조회
-  getUserByproviderId: async (provider_id) => {
+  getUserByProviderId: async (provider_id) => {
     const connection = await pool.getConnection();
 
     try {

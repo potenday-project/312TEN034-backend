@@ -77,23 +77,23 @@ router.post('/signIn', userController.signIn);
  *     post:
  *       tags: [Users]
  *       summary: "회원가입"
- *       description: "회원가입(nickname, provider_id, champion 값 필요), champion 값은 CHAMP1, CHAMP2, CHAMP3, CHAMP4, CHAMP5 중 하나여야 함"
+ *       description: "회원가입(accessToken, nickname, champion 값 필요), champion 값은 RED, YELLOW, GREEN, BLUE, PINK, BEIGE 중 하나여야 함"
  *       requestBody:
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               example: {"nickname": "닉네임", "provider_id": "123456789", "champion": "CHAMP1"}
+ *               example: {"nickname": "닉네임", "accessToken": "123456789", "champion": "CHAMP1"}
  *             properties:
  *               nickname:
  *                 type: string
  *                 description: "닉네임"
- *               provider_id:
+ *               accessToken:
  *                 type: string
- *                 description: "카카오 provider_id"
+ *                 description: "카카오 access 토큰"
  *               champion:
  *                 type: string
- *                 description: "챔피언 이름(CHAMP1, CHAMP2, CHAMP3, CHAMP4, CHAMP5)"
+ *                 description: "챔피언 이름(RED, YELLOW, GREEN, BLUE, PINK, BEIGE)"
  *       responses:
  *         "201":
  *           description: "회원가입 요청에 성공했습니다."
