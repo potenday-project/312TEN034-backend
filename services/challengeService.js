@@ -1,9 +1,8 @@
 const { challengeModel } = require('../models/challengeModel');
+const { challengeParticipantModel } = require('../models/challengeParticipantModel');
 
 const challengeService = {
-  createChallenge: async ({ name, category, authenticationMethod, reward, targetCount }) => {
-    console.log(name, category, authenticationMethod, reward, targetCount);
-
+  createChallenge: async ({ userId, name, category, authenticationMethod, reward, targetCount }) => {
     try {
       const result = await challengeModel.createChallenge({
         name,
@@ -11,6 +10,12 @@ const challengeService = {
         authenticationMethod,
         reward,
         targetCount,
+      });
+
+      await challengeParticipantModel.createChallengeParticipant({
+        memberId: userId,
+        challengeId: result.insertId,
+        role: 'OWNER',
       });
 
       return {
