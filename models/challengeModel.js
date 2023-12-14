@@ -10,6 +10,25 @@ const challengeModel = {
     );
     return rows;
   },
+
+  startChallenge: async ({ challengeId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query('UPDATE challenge SET challenge_status = "PROGRESS" WHERE id = ?', [
+      challengeId,
+    ]);
+    return rows;
+  },
+
+  approveChallenge: async ({ memberId, challengeId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query(
+      'INSERT INTO challenge_participant (member_id, challenge_id, role) VALUES (?, ?, ?)',
+      [memberId, challengeId, 'MEMBER']
+    );
+    return rows;
+  },
 };
 
 module.exports = {
