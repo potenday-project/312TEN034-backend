@@ -11,6 +11,16 @@ const challengeParticipantModel = {
 
     return rows;
   },
+
+  getChallengeParticipantsByChallengeId: async ({ challengeId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query('SELECT * FROM challenge_participant WHERE challenge_id = ?', [
+      challengeId,
+    ]);
+
+    return rows;
+  },
 };
 
 module.exports = {

@@ -53,6 +53,50 @@ const challengeController = {
       });
     }
   },
+  getUpcomingChallenge: async (req, res) => {
+    const { id: challengeId } = req.params;
+
+    const result = await challengeService.getUpcomingChallenge({
+      challengeId,
+    });
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '챌린지 조회 요청에 성공했습니다.',
+        data: {
+          challenge: result.data.challenge,
+        },
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: '챌린지 조회 요청에 실패했습니다.',
+        err: result.err.message,
+      });
+    }
+  },
+  getInProgressChallenge: async (req, res) => {
+    const { id: challengeId } = req.params;
+
+    const result = await challengeService.getInProgressChallenge({
+      challengeId,
+    });
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '챌린지 조회 요청에 성공했습니다.',
+        data: result.data,
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: '챌린지 조회 요청에 실패했습니다.',
+        err: result.err.message,
+      });
+    }
+  },
 };
 
 module.exports = {
