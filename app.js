@@ -4,11 +4,13 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const { swaggerUi, specs } = require('./swagger/swagger');
 
 const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
 const challengeRouter = require('./routes/challengeRouter');
 const badgeRouter = require('./routes/badgeRouter');
+const s3Router = require('./routes/s3Router');
 
 require('dotenv').config();
 
@@ -32,7 +34,7 @@ app.use('/users', userRouter);
 app.use('/challenges', challengeRouter);
 app.use('/badges', badgeRouter);
 
-const { swaggerUi, specs } = require('./swagger/swagger');
+app.use('/s3', s3Router);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 

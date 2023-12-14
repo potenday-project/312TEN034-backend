@@ -12,6 +12,13 @@ const { challengeController } = require('../controllers/challengeController');
  *          tags: [Challenges]
  *          summary: "챌린지 생성"
  *          description: "챌린지 생성"
+ *          parameters:
+ *            - name: "Authorization"
+ *              in: "header"
+ *              description: "Access Token"
+ *              required: true
+ *              schema:
+ *                type: "string"
  *          requestBody:
  *              content:
  *                  application/json:
@@ -47,6 +54,13 @@ router.post('/', challengeController.createChallenge);
  *          tags: [Challenges]
  *          summary: "챌린지 수락"
  *          description: "챌린지 수락"
+ *          parameters:
+ *              - name: "Authorization"
+ *                in: "header"
+ *                description: "Access Token"
+ *                required: true
+ *                schema:
+ *                  type: "string"
  *          requestBody:
  *              content:
  *                  application/json:
@@ -116,7 +130,14 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  *          tags: [Challenges]
  *          summary: "진행 중인 챌린지의 진행 상태 조회"
  *          description: "진행 중인 챌린지의 진행 상태 조회"
+ *
  *          parameters:
+ *             - name: "Authorization"
+ *               in: "header"
+ *               description: "Access Token"
+ *               required: true
+ *               schema:
+ *                  type: "string"
  *             - in: path
  *               name: id
  *               type: integer
