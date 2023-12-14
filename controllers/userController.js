@@ -13,7 +13,7 @@ const userController = {
       // 1. 토큰 정보 받아오기
       const {
         data: { id: provider_id },
-      } = getUserInfoFromKakao({ accessToken });
+      } = await getUserInfoFromKakao({ accessToken });
 
       // 2. 토큰 정보의 provider_id DB조회
       const userData = await userService.getUserByProviderId(provider_id);
