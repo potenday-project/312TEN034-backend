@@ -1,14 +1,14 @@
 const { challengeService } = require('../services/challengeService');
+const { extractJwtPayload, getUserIdFromJwt } = require('../utils/jwt');
 
 const challengeController = {
   createChallenge: async (req, res) => {
-    console.log(req.body);
-
     const { name, category, authenticationMethod, reward } = req.body;
 
     const TARGET_COUNT = 10;
 
     const result = await challengeService.createChallenge({
+      userId: getUserIdFromJwt(req.headers.authorization),
       name,
       category,
       authenticationMethod,
