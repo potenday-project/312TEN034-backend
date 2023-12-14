@@ -64,4 +64,87 @@ router.get('/', alarmController.getAlarms);
  */
 router.get('/new', alarmController.getNewAlarmExist);
 
+/**
+ * @swagger
+ * paths:
+ *   /alarms/approve:
+ *     post:
+ *       tags: [Alarms]
+ *       summary: "상대방 인증 요청 알람 승인"
+ *       description: "상대방 인증 요청 알람 승인"
+ *       parameters:
+ *         - name: "Authorization"
+ *           in: "header"
+ *           description: "Access Token"
+ *           required: true
+ *           schema:
+ *             type: "string"
+ *       requestBody:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 challengeCertificationId:
+ *                   type: integer
+ *               required:
+ *                 - challengeCertificationId
+ *               description: "인증 요청 알람의 challengeCertificationId"
+ *       responses:
+ *         "200":
+ *           description: "상대방 인증 요청 알람 승인 요청에 성공했습니다."
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   message:
+ *                     type: string
+ */
+
+router.post('/approve', alarmController.approveAlarm);
+
+/**
+ * @swagger
+ * paths:
+ *   /alarms/reject:
+ *     post:
+ *       tags: [Alarms]
+ *       summary: "상대방 인증 요청 알람 거절"
+ *       description: "상대방 인증 요청 알람 거절"
+ *       parameters:
+ *         - name: "Authorization"
+ *           in: "header"
+ *           description: "Access Token"
+ *           required: true
+ *           schema:
+ *             type: "string"
+ *       requestBody:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 challengeCertificationId:
+ *                   type: integer
+ *               required:
+ *                 - challengeCertificationId
+ *               description: "인증 요청 알람의 challengeCertificationId"
+ *       responses:
+ *         "200":
+ *           description: "상대방 인증 요청 알람 승인 거절에 성공했습니다."
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   message:
+ *                     type: string
+ */
+router.post('/reject', alarmController.rejectAlarm);
+
 module.exports = router;

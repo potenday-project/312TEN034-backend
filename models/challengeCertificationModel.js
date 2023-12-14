@@ -62,6 +62,26 @@ const challengeCertificationModel = {
 
     return rows;
   },
+
+  approveChallengeCertification: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query(
+      `UPDATE challenge_certification SET is_authenticate = true WHERE id = ${challengeCertificationId}`
+    );
+
+    return rows;
+  },
+
+  rejectChallengeCertification: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    const [rows, fields] = await connection.query(
+      `UPDATE challenge_certification SET is_authenticate = false WHERE id = ${challengeCertificationId}`
+    );
+
+    return rows;
+  },
 };
 
 module.exports = {

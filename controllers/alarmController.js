@@ -47,10 +47,44 @@ const alarmController = {
     }
   },
   approveAlarm: async (req, res) => {
-    // 상대방의 인증 요청 알람을 승인
+    const { challengeCertificationId } = req.body;
+
+    try {
+      await alarmService.approveChallengeCertification({
+        challengeCertificationId,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: '알람 승인에 성공했습니다.',
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: '알람 승인에 실패했습니다.',
+        err: err.message,
+      });
+    }
   },
   rejectAlarm: async (req, res) => {
-    // 상대방의 인증 요청 알람을 거절
+    const { challengeCertificationId } = req.body;
+
+    try {
+      await alarmService.rejectChallengeCertification({
+        challengeCertificationId,
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: '알람 거절에 성공했습니다.',
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: '알람 거절에 실패했습니다.',
+        err: err.message,
+      });
+    }
   },
 };
 
