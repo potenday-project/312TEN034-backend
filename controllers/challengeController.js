@@ -97,6 +97,24 @@ const challengeController = {
       });
     }
   },
+  submitImage: async (req, res) => {
+    const result = await challengeService.submitImage(req, res);
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '이미지 업로드에 성공했습니다.',
+        data: {
+          IMG_URL: result.data,
+        },
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: '이미지 업로드에 실패했습니다.',
+        err: result.err,
+      });
+    }
+  },
 };
 
 module.exports = {
