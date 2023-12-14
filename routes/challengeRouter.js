@@ -6,13 +6,6 @@ const { challengeController } = require('../controllers/challengeController');
 
 /**
  * @swagger
- * tags:
- *   name: Users
- *   description: 유저 추가 수정 삭제 조회
- */
-
-/**
- * @swagger
  * paths:
  *  /challenges:
  *      post:
@@ -45,5 +38,40 @@ const { challengeController } = require('../controllers/challengeController');
  *                                              description: "챌린지 아이디"
  */
 router.post('/', challengeController.createChallenge);
+
+/**
+ * @swagger
+ * paths:
+ *  /challenges/approve:
+ *      post:
+ *          tags: [Challenges]
+ *          summary: "챌린지 수락"
+ *          description: "챌린지 수락"
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          example : { "challengeId": 1 }
+ *          responses:
+ *              "200":
+ *                  description: "챌린지 승인 요청에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ *                                  data:
+ *                                      type: object
+ *                                      properties:
+ *                                          challengeId:
+ *                                              type: number
+ *                                              description: "챌린지 아이디"
+ */
+router.post('/approve', challengeController.approveChallenge);
 
 module.exports = router;

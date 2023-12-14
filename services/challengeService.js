@@ -31,6 +31,30 @@ const challengeService = {
       };
     }
   },
+  approveChallenge: async ({ memberId, challengeId }) => {
+    try {
+      const result = await challengeModel.approveChallenge({
+        memberId,
+        challengeId,
+      });
+
+      await challengeModel.startChallenge({
+        challengeId,
+      });
+
+      return {
+        success: true,
+        data: {
+          challengeId: result.insertId,
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        err: error,
+      };
+    }
+  },
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
 const { challengeService } = require('../services/challengeService');
-const { extractJwtPayload, getUserIdFromJwt } = require('../utils/jwt');
+const { getUserIdFromJwt } = require('../utils/jwt');
 
 const challengeController = {
   createChallenge: async (req, res) => {
@@ -28,6 +28,27 @@ const challengeController = {
       return res.status(400).json({
         success: false,
         message: '챌린지 생성 요청에 실패했습니다.',
+        err: result.err.message,
+      });
+    }
+  },
+  approveChallenge: async (req, res) => {
+    const { challengeId } = req.body;
+
+    const result = await challengeService.approveChallenge({
+      memberId: getUserIdFromJwt(req.headers.authorization),
+      challengeId,
+    });
+
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '챌린지 승인 요청에 성공했습니다.',
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: '챌린지 승인 요청에 실패했습니다.',
         err: result.err.message,
       });
     }
