@@ -4,6 +4,29 @@ const router = express.Router();
 
 const { challengeController } = require('../controllers/challengeController');
 
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
+
+const s3 = new S3Client({
+  region: 'ap-northeast-2',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'dodals3',
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString());
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
 /**
  * @swagger
  * paths:
@@ -171,6 +194,46 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
  */
 router.get('/in-progress/:id', challengeController.getInProgressChallenge);
 
-router.post('/submit', challengeController.submitImage);
+/**
+ * @swagger
+ * paths:
+ *   /challenges/submit:
+ *     post:
+ *       tags: [Challenges]
+ *       summary: "챌린지 인증 요청"
+ *       parameters:
+ *         - name: "Authorization"
+ *           in: "header"
+ *           description: "Access Token"
+ *           required: true
+ *           schema:
+ *             type: "string"
+ *       requestBody:
+ *         content:
+ *           multipart/form-data:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 image:
+ *                   type: string
+ *                   format: binary
+ *                 challengeId:
+ *                   type: integer
+ *               description: "챌린지 아이디"
+ *       responses:
+ *         "200":
+ *           description: "챌린지 인증 요청에 성공했습니다."
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   success:
+ *                     type: boolean
+ *                   message:
+ *                     type: string
+ *                     example: "챌린지 인증 요청에 성공했습니다."
+ */
+router.post('/submit', upload.single('image'), challengeController.submitImage);
 
 module.exports = router;
