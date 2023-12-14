@@ -68,7 +68,7 @@ const { userController } = require('../controllers/userController');
  *
  *
  */
-// useres/signIn
+// users/signIn
 router.post('/signIn', userController.signIn);
 /**
  * @swagger

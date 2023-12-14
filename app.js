@@ -7,6 +7,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/indexRouter');
 const userRouter = require('./routes/userRouter');
+const challengeRouter = require('./routes/challengeRouter');
 
 require('dotenv').config();
 
@@ -27,6 +28,7 @@ app.use(cors());
 
 app.use('/users', userRouter);
 app.use('/', indexRouter);
+app.use('/challenges', challengeRouter);
 
 const { swaggerUi, specs } = require('./swagger/swagger');
 
