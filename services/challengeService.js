@@ -131,6 +131,46 @@ const challengeService = {
       return res.status(500).json({ success: false, err: err });
     }
   },
+
+  findNullApproved: async ({ memberId, challengeId }) => {
+    try {
+      const result = await challengeCertificationModel.findNullApproved({
+        memberId,
+        challengeId,
+      });
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (err) {
+      return {
+        success: false,
+        err,
+      };
+    }
+  },
+
+  submitChallenge: async ({ memberId, challengeId, imageUrl, is_authenticate }) => {
+    try {
+      const result = await challengeCertificationModel.submitChallenge({
+        memberId,
+        challengeId,
+        imageUrl,
+        is_authenticate,
+      });
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (err) {
+      return {
+        success: false,
+        err,
+      };
+    }
+  },
 };
 
 module.exports = {
