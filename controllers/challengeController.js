@@ -149,9 +149,12 @@ const challengeController = {
             IMG_URL,
             is_authenticate: 1,
           });
+          return res.status(200).json({
+            success: true,
+            message: '이미지 업로드에 성공, 챌린지 인증 쿼리문 성공했습니다',
+            data: { IMG_URL, submitResult },
+          });
         }
-
-        // 인설트 성공시
       }
     } else {
       return res.status(400).json({
