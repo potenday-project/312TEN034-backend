@@ -7,7 +7,7 @@ const { alarmController } = require('../controllers/alarmController');
 /**
  * @swagger
  * paths:
- *   /alarms:
+ *   /api/alarms:
  *     get:
  *       tags: [Alarms]
  *       summary: "유저의 알람 전체 조회"
@@ -37,7 +37,7 @@ router.get('/', alarmController.getAlarms);
 /**
  * @swagger
  * paths:
- *   /alarms/new:
+ *   /api/alarms/new:
  *     get:
  *       tags: [Alarms]
  *       summary: "새로운 알람 존재 여부 조회"
@@ -67,7 +67,7 @@ router.get('/new', alarmController.getNewAlarmExist);
 /**
  * @swagger
  * paths:
- *   /alarms/approve:
+ *   /api/alarms/approve:
  *     post:
  *       tags: [Alarms]
  *       summary: "상대방 인증 요청 알람 승인"
@@ -109,7 +109,7 @@ router.post('/approve', alarmController.approveAlarm);
 /**
  * @swagger
  * paths:
- *   /alarms/reject:
+ *   /api/alarms/reject:
  *     post:
  *       tags: [Alarms]
  *       summary: "상대방 인증 요청 알람 거절"

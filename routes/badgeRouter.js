@@ -7,7 +7,7 @@ const { badgeController } = require('../controllers/badgeController');
 /**
  * @swagger
  * paths:
- *   /badges:
+ *   /api/badges:
  *     get:
  *       tags: [Badges]
  *       summary: "뱃지 조회"
