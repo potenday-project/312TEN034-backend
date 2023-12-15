@@ -60,7 +60,7 @@ const challengeModel = {
     const connection = await pool.getConnection();
 
     const [rows, fields] = await connection.query(
-      'SELECT COUNT(DISTINCT cT.id) AS exploration_count FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND cT.challenge_status = "PROGRESS"',
+      `SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND cT.challenge_status = "PROGRESS";`,
       [memberId]
     );
 
@@ -71,7 +71,7 @@ const challengeModel = {
     const connection = await pool.getConnection();
 
     const [rows, fields] = await connection.query(
-      'SELECT COUNT(DISTINCT cT.id) AS certificated_count FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND DATE(ccT.created_at) = CURDATE()',
+      'SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND DATE(ccT.created_at) = CURDATE();',
       [memberId]
     );
 
