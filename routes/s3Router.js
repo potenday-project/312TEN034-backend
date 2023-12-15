@@ -27,7 +27,7 @@ const upload = multer({
 
 /**
  * @swagger
- * /s3/upload:
+ * /api/s3/upload:
  *   post:
  *     summary: S3에 파일 업로드
  *     requestBody:

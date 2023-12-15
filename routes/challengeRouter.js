@@ -30,7 +30,7 @@ const upload = multer({
 /**
  * @swagger
  * paths:
- *  /challenges:
+ *  /api/challenges:
  *      post:
  *          tags: [Challenges]
  *          summary: "챌린지 생성"
@@ -72,7 +72,7 @@ router.post('/', challengeController.createChallenge);
 /**
  * @swagger
  * paths:
- *  /challenges/approve:
+ *  /api/challenges/approve:
  *      post:
  *          tags: [Challenges]
  *          summary: "챌린지 수락"
@@ -114,7 +114,7 @@ router.post('/approve', challengeController.approveChallenge);
 /**
  * @swagger
  * paths:
- *  /challenges/upcoming/{id}:
+ *  /api/challenges/upcoming/{id}:
  *      get:
  *          tags: [Challenges]
  *          summary: "진행 전인 챌린지 조회"
@@ -148,7 +148,7 @@ router.get('/upcoming/:id', challengeController.getUpcomingChallenge);
 /**
  * @swagger
  * paths:
- *  /challenges/in-progress/{id}:
+ *  /api/challenges/in-progress/{id}:
  *      get:
  *          tags: [Challenges]
  *          summary: "진행 중인 챌린지의 진행 상태 조회"
@@ -197,7 +197,7 @@ router.get('/in-progress/:id', challengeController.getInProgressChallenge);
 /**
  * @swagger
  * paths:
- *   /challenges/submit:
+ *   /api/challenges/submit:
  *     post:
  *       tags: [Challenges]
  *       summary: "챌린지 인증 요청"

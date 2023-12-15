@@ -13,7 +13,7 @@ const { userController } = require('../controllers/userController');
 /**
  * @swagger
  * paths:
- *  /users/signIn:
+ *  /api/users/signIn:
  *      post:
  *          tags: [Users]
  *          summary: "로그인(토큰 생성)"
@@ -72,7 +72,7 @@ router.post('/signIn', userController.signIn);
 /**
  * @swagger
  * paths:
- *   /users/signUp:
+ *   /api/users/signUp:
  *     post:
  *       tags: [Users]
  *       summary: "회원가입"
@@ -123,7 +123,7 @@ router.post('/signUp', userController.signUp);
 /**
  * @swagger
  * paths:
- *    /users:
+ *    /api/users:
  *      get:
  *          tags: [Users]
  *          summary: "유저 프로필 조회"

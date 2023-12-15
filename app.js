@@ -31,11 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/challenges', challengeRouter);
-app.use('/badges', badgeRouter);
-app.use('/alarms', alarmRouter);
-app.use('/s3', s3Router);
+app.use('/api/users', userRouter);
+app.use('/api/challenges', challengeRouter);
+app.use('/api/badges', badgeRouter);
+app.use('/api/alarms', alarmRouter);
+app.use('/api/s3', s3Router);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
