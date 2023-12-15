@@ -160,6 +160,24 @@ const challengeService = {
       };
     }
   },
+
+  getChallenges: async ({ memberId }) => {
+    try {
+      const result = await challengeModel.findChallengesByMemberId({
+        memberId,
+      });
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (err) {
+      return {
+        success: false,
+        err,
+      };
+    }
+  },
 };
 
 module.exports = {
