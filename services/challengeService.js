@@ -167,6 +167,28 @@ const challengeService = {
         memberId,
       });
 
+      console.log(result);
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (err) {
+      return {
+        success: false,
+        err,
+      };
+    }
+  },
+
+  getTodayChallengeStatus: async ({ memberId }) => {
+    try {
+      const result = await challengeModel.findExplorationCountByMemberId({
+        memberId,
+      });
+
+      console.log(result);
+
       return {
         success: true,
         data: result,

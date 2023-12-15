@@ -132,7 +132,30 @@ router.post('/approve', challengeController.approveChallenge);
  *                                  message:
  *                                      type: string
  */
-router.get('/', challengeController.getUpcomingChallenge);
+router.get('/', challengeController.getChallenges);
+
+/**
+ * @swagger
+ * paths:
+ *  /api/challenges/today:
+ *      get:
+ *          tags: [Challenges]
+ *          summary: "유저의 오늘 챌린지 진행 상태 조회"
+ *          description: "유저의 오늘 챌린지 진행 상태 조회"
+ *          responses:
+ *              "200":
+ *                  description: "챌린지 조회 요청에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ */
+router.get('/today', challengeController.getTodayChallengeStatus);
 
 /**
  * @swagger
