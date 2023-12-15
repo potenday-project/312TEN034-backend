@@ -4,22 +4,29 @@ const challengeParticipantModel = {
   createChallengeParticipant: async ({ memberId, challengeId, role }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query(
-      'INSERT INTO challenge_participant (member_id, challenge_id, role) VALUES (?, ?, ?)',
-      [memberId, challengeId, role]
-    );
-
-    return rows;
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO challenge_participant (member_id, challenge_id, role) VALUES (?, ?, ?)',
+        [memberId, challengeId, role]
+      );
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   getChallengeParticipantsByChallengeId: async ({ challengeId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query('SELECT * FROM challenge_participant WHERE challenge_id = ?', [
-      challengeId,
-    ]);
+    try {
+      const [rows, fields] = await connection.query('SELECT * FROM challenge_participant WHERE challenge_id = ?', [
+        challengeId,
+      ]);
 
-    return rows;
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 };
 

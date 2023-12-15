@@ -4,78 +4,109 @@ const challengeModel = {
   createChallenge: async ({ name, category, authenticationMethod, reward, targetCount }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query(
-      'INSERT INTO challenge (name, category, authentication_method, reward, target_count) VALUES (?, ?, ?, ?, ?)',
-      [name, category, authenticationMethod, reward, targetCount]
-    );
-    return rows;
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO challenge (name, category, authentication_method, reward, target_count) VALUES (?, ?, ?, ?, ?)',
+        [name, category, authenticationMethod, reward, targetCount]
+      );
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   startChallenge: async ({ challengeId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query('UPDATE challenge SET challenge_status = "PROGRESS" WHERE id = ?', [
-      challengeId,
-    ]);
-    return rows;
+    try {
+      const [rows, fields] = await connection.query('UPDATE challenge SET challenge_status = "PROGRESS" WHERE id = ?', [
+        challengeId,
+      ]);
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   approveChallenge: async ({ memberId, challengeId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query(
-      'INSERT INTO challenge_participant (member_id, challenge_id, role) VALUES (?, ?, ?)',
-      [memberId, challengeId, 'MEMBER']
-    );
-    return rows;
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO challenge_certification (member_id, challenge_id, is_authenticate) VALUES (?, ?, TRUE)',
+        [memberId, challengeId]
+      );
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   getUpcomingChallenge: async ({ challengeId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
-    return rows;
+    try {
+      const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   getInProgressChallenge: async ({ challengeId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
-    return rows;
+    try {
+      const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   findChallengesByMemberId: async ({ memberId }) => {
     const connection = await pool.getConnection();
 
-    // 현재 진행 중인 챌린지 전체 조회 (status: PROGRESS)
-    const [rows, fields] = await connection.query(
-      'SELECT * FROM challenge WHERE id IN (SELECT challenge_id FROM challenge_participant WHERE member_id = ?) AND challenge_status = "PROGRESS"',
-      [memberId]
-    );
+    try {
+      const [rows, fields] = await connection.query(
+        'SELECT * FROM challenge WHERE id IN (SELECT challenge_id FROM challenge_participant WHERE member_id = ?) AND challenge_status = "PROGRESS"',
+        [memberId]
+      );
 
-    return rows;
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   findExplorationCountByMemberId: async ({ memberId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query(
-      `SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND cT.challenge_status = "PROGRESS";`,
-      [memberId]
-    );
+    try {
+      const [rows, fields] = await connection.query(
+        `SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND cT.challenge_status = "PROGRESS";`,
+        [memberId]
+      );
 
-    return rows;
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 
   findCertificatedCountByMemberId: async ({ memberId }) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query(
-      'SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND DATE(ccT.created_at) = CURDATE();',
-      [memberId]
-    );
+    try {
+      const [rows, fields] = await connection.query(
+        'SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND DATE(ccT.created_at) = CURDATE();',
+        [memberId]
+      );
 
-    return rows;
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 };
 
