@@ -43,6 +43,18 @@ const challengeModel = {
     const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
     return rows;
   },
+
+  findChallengesByMemberId: async ({ memberId }) => {
+    const connection = await pool.getConnection();
+
+    // 현재 진행 중인 챌린지 전체 조회 (status: PROGRESS)
+    const [rows, fields] = await connection.query(
+      'SELECT * FROM challenge WHERE id IN (SELECT challenge_id FROM challenge_participant WHERE member_id = ?) AND challenge_status = "PROGRESS"',
+      [memberId]
+    );
+
+    return rows;
+  },
 };
 
 module.exports = {
