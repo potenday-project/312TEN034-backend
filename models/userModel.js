@@ -37,9 +37,12 @@ const userModel = {
   getUserProfile: async (id) => {
     const connection = await pool.getConnection();
 
-    const [rows, fields] = await connection.query('SELECT * FROM member WHERE id = ?', id);
-
-    return rows;
+    try {
+      const [rows, fields] = await connection.query('SELECT * FROM member WHERE id = ?', id);
+      return rows;
+    } finally {
+      connection.release();
+    }
   },
 };
 
