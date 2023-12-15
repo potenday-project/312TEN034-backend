@@ -2,6 +2,7 @@ const { challengeModel } = require('../models/challengeModel');
 const { challengeParticipantModel } = require('../models/challengeParticipantModel');
 const { challengeCertificationModel } = require('../models/challengeCertificationModel');
 const { memberModel } = require('../models/memberModel');
+const { userModel } = require('../models/userModel');
 
 const challengeService = {
   createChallenge: async ({ userId, name, category, authenticationMethod, reward, targetCount }) => {
@@ -183,15 +184,19 @@ const challengeService = {
 
   getTodayChallengeStatus: async ({ memberId }) => {
     try {
-      const result = await challengeModel.findExplorationCountByMemberId({
-        memberId,
-      });
-
-      console.log(result);
+      const [user, explorationCount, certificatedCount] = await Promise.all([
+        userModel.getUserProfile(memberId),
+        challengeModel.findExplorationCountByMemberId({ memberId }),
+        challengeModel.findCertificatedCountByMemberId({ memberId }),
+      ]);
 
       return {
         success: true,
-        data: result,
+        data: {
+          champion: user[0].champion,
+          explorationCount: explorationCount[0]['COUNT(DISTINCT cT.id)'],
+          certificatedCount: certificatedCount[0]['COUNT(DISTINCT cT.id)'],
+        },
       };
     } catch (err) {
       return {
