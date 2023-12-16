@@ -60,15 +60,13 @@ const challengeService = {
   },
   getUpcomingChallenge: async ({ challengeId }) => {
     try {
-      const result = await challengeModel.getUpcomingChallenge({
+      const result = await challengeModel.getChallengeOwner({
         challengeId,
       });
 
       return {
         success: true,
-        data: {
-          challenge: result,
-        },
+        data: result,
       };
     } catch (error) {
       return {
@@ -168,8 +166,6 @@ const challengeService = {
         memberId,
       });
 
-      console.log(result);
-
       return {
         success: true,
         data: result,
@@ -190,10 +186,12 @@ const challengeService = {
         challengeModel.findCertificatedCountByMemberId({ memberId }),
       ]);
 
+      console.log(user);
+
       return {
         success: true,
         data: {
-          champion: user.champion,
+          champion: user[0].champion,
           explorationCount: explorationCount[0]['COUNT(DISTINCT cT.id)'],
           certificatedCount: certificatedCount[0]['COUNT(DISTINCT cT.id)'],
         },
