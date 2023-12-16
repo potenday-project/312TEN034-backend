@@ -87,12 +87,17 @@ const challengeController = {
       challengeId,
     });
 
+    const myResult = result.data.filter((obj) => obj.id === myId)[0];
+    const otherResult = result.data.filter((obj) => obj.id !== myId)[0];
+
     if (result.success) {
       return res.status(200).json({
         success: true,
         message: '챌린지 조회 요청에 성공했습니다.',
-        data: result.data,
-        myId,
+        data: {
+          myResult,
+          otherResult,
+        },
       });
     } else {
       return res.status(400).json({
