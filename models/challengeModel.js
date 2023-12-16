@@ -99,7 +99,7 @@ const challengeModel = {
 
     try {
       const [rows, fields] = await connection.query(
-        `SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_certification ccT ON cT.id = ccT.challenge_id LEFT JOIN member m ON ccT.member_id = m.id WHERE m.id = ? AND cT.challenge_status = "PROGRESS";`,
+        `SELECT COUNT(DISTINCT cT.id) FROM challenge cT LEFT JOIN challenge_participant cpT ON cT.id = cpT.challenge_id LEFT JOIN member m ON cpT.member_id = m.id WHERE m.id = 22 AND cT.challenge_status = "PROGRESS";`,
         [memberId]
       );
 
