@@ -117,6 +117,29 @@ router.post('/approve', challengeController.approveChallenge);
  *  /api/challenges:
  *      get:
  *          tags: [Challenges]
+ *          summary: "유저의 챌린지 전체 조회"
+ *          description: "유저의 챌린지 전체 조회"
+ *          responses:
+ *              "200":
+ *                  description: "챌린지 조회 요청에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ */
+router.get('/', challengeController.getChallenges);
+
+/**
+ * @swagger
+ * paths:
+ *  /api/challenges/in-progress:
+ *      get:
+ *          tags: [Challenges]
  *          summary: "유저의 현재 진행 중인 챌린지 전체 조회"
  *          description: "유저의 현재 진행 중인 챌린지 전체 조회"
  *          responses:
@@ -132,7 +155,7 @@ router.post('/approve', challengeController.approveChallenge);
  *                                  message:
  *                                      type: string
  */
-router.get('/', challengeController.getChallenges);
+router.get('/in-progress', challengeController.getInprogressChallenges);
 
 /**
  * @swagger
