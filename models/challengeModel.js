@@ -47,7 +47,21 @@ const challengeModel = {
 
     try {
       const [rows, fields] = await connection.query('SELECT * FROM challenge WHERE id = ?', [challengeId]);
-      return rows;
+      return rows[0];
+    } finally {
+      connection.release();
+    }
+  },
+
+  getChallengeOwner: async ({ challengeId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        'SELECT member.nickname FROM member WHERE id IN (SELECT member_id FROM challenge_participant WHERE challenge_id = ? AND role = "OWNER")',
+        [challengeId]
+      );
+      return rows[0];
     } finally {
       connection.release();
     }
