@@ -33,9 +33,10 @@ const challengeModel = {
 
     try {
       const [rows, fields] = await connection.query(
-        'INSERT INTO challenge_certification (member_id, challenge_id, is_authenticate) VALUES (?, ?, TRUE)',
+        `INSERT INTO challenge_participant (member_id, challenge_id, role) VALUES (?, ?, 'MEMBER')`,
         [memberId, challengeId]
       );
+      console.log('고쳤음', rows);
       return rows;
     } finally {
       connection.release();
