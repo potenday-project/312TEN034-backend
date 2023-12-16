@@ -108,6 +108,7 @@ const challengeController = {
       // 챌린지 인증 테이블 인설트 하기 전,
       // 제일 최근 인증이 수락되지 않은 인증(Null)인가?
       const findNullApproved = await challengeService.findNullApproved({ memberId, challengeId });
+      console.log('find', findNullApproved);
 
       const [{ is_authenticate: isAuthenticate, participation_count: participationCount }] = findNullApproved.data;
 
@@ -151,8 +152,9 @@ const challengeController = {
         }
       }
 
-      if (isAuthenticate === 1) {
+      if (isAuthenticate === 1 || isAuthenticate === undefined) {
         // 3. 제일 최근 인증이 승인된 인증이면?
+        // 4. 제일 최근 인증이 없어도 이 이프문에 해당(첫 인증). 카운트는 0로 들어가기 때문에 1로 설정된다.
         const submitResult = await challengeService.createChallengeCertification({
           memberId,
           challengeId,

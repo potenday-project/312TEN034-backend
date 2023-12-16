@@ -19,10 +19,17 @@ const challengeCertificationModel = {
     const connection = await pool.getConnection();
 
     try {
-      const [rows, fields] = await connection.query(
+      let [rows, fields] = await connection.query(
         // 제일 최근의 인증이 NULL이면 true, 아니면 false
         `SELECT is_authenticate, participation_count FROM challenge_certification WHERE member_id = ${memberId} AND challenge_id = ${challengeId} ORDER BY id DESC LIMIT 1;`
       );
+
+      // 제일 최근 인증이 없으면?(인증시도을 한 번도 안 했으면?)
+      if (rows.length === 0) {
+        rows = [{ is_authenticate: undefined, participation_count: 0 }];
+        console.log('result2', rows);
+        return rows;
+      }
 
       return rows;
     } finally {
