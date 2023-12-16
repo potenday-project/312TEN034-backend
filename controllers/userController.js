@@ -67,11 +67,23 @@ const userController = {
   },
 
   getUserProfile: async (req, res) => {
-    const { id } = getUserIdFromJwt(req.headers.authorization);
+    const id = getUserIdFromJwt(req.headers.authorization);
 
-    const result = await userService.getUserProfile(id);
+    try {
+      const result = await userService.getUserProfile(id);
 
-    return res.status(200).json({ result });
+      return res.status(200).json({
+        success: true,
+        message: '프로필 조회에 성공했습니다.',
+        data: result[0],
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: '프로필 조회에 실패했습니다.',
+        err: err,
+      });
+    }
   },
 };
 
