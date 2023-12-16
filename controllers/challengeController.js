@@ -112,11 +112,8 @@ const challengeController = {
       // 챌린지 인증 테이블 인설트 하기 전,
       // 제일 최근 인증이 수락되지 않은 인증(Null)인가?
       const findNullApproved = await challengeService.findNullApproved({ memberId, challengeId });
-      console.log('find', findNullApproved);
 
       const [{ is_authenticate: isAuthenticate, participation_count: participationCount }] = findNullApproved.data;
-
-      console.log(isAuthenticate, participationCount);
 
       // 1. 아직 승인되지 않은 인증이 있으면
       if (isAuthenticate === null) {
@@ -136,8 +133,6 @@ const challengeController = {
           is_authenticate: null,
           participationCount,
         });
-
-        // TODO: 재인증 요청 알람을 상대방에게 전송한다.
 
         if (submitResult.success) {
           // 재인증 요청이므로 마지막 인증 요청의 participation_count로 그대로 만들고, is_authenticate를 NULL로 넣고 생성한다.
@@ -168,6 +163,7 @@ const challengeController = {
         });
 
         // TODO: 새로운 인증 요청 알람을 상대방에게 전송한다.
+        await alarmService.createCertificationAlarm({ challengeCertificationId: submitResult.data.insertId });
 
         if (submitResult.success) {
           // 새로운 인증 요청이므로 participation_count를 1 증가시키고, is_authenticate를 NULL로 넣고 생성한다.

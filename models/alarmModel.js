@@ -41,6 +41,51 @@ const alarmModel = {
       connection.release();
     }
   },
+
+  createCertificationAlarm: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "REQUEST")',
+        [challengeCertificationId]
+      );
+
+      return rows;
+    } finally {
+      connection.release();
+    }
+  },
+
+  createApproveAlarm: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "SUCCESS")',
+        [challengeCertificationId]
+      );
+
+      return rows;
+    } finally {
+      connection.release();
+    }
+  },
+
+  createRejectAlarm: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "FAIL")',
+        [challengeCertificationId]
+      );
+
+      return rows;
+    } finally {
+      connection.release();
+    }
+  },
 };
 
 module.exports = {
