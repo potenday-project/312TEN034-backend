@@ -161,6 +161,24 @@ const challengeService = {
     }
   },
 
+  getInprogressChallenges: async ({ memberId }) => {
+    try {
+      const result = await challengeModel.findInprogressChallengesByMemberId({
+        memberId,
+      });
+
+      return {
+        success: true,
+        data: result,
+      };
+    } catch (err) {
+      return {
+        success: false,
+        err,
+      };
+    }
+  },
+
   getChallenges: async ({ memberId }) => {
     try {
       const result = await challengeModel.findChallengesByMemberId({
