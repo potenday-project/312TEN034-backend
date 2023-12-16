@@ -143,6 +143,21 @@ const challengeModel = {
       connection.release();
     }
   },
+
+  findOtherMemberByChallengeId: async ({ memberId, challengeId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        'SELECT * FROM member WHERE id IN (SELECT member_id FROM challenge_participant WHERE challenge_id = ? AND member_id != ?)',
+        [challengeId, memberId]
+      );
+
+      return rows;
+    } finally {
+      connection.release();
+    }
+  },
 };
 
 module.exports = {

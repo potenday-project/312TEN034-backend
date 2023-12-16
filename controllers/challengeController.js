@@ -1,5 +1,6 @@
 const { challengeService } = require('../services/challengeService');
 const { challengeCertificationModel } = require('../models/challengeCertificationModel');
+const { challengeModel } = require('../models/challengeModel');
 const { alarmService } = require('../services/alarmService');
 const { getUserIdFromJwt } = require('../utils/jwt');
 const { getUserChampionFromJwt } = require('../utils/jwt');
@@ -163,10 +164,10 @@ const challengeController = {
           participationCount: participationCount + 1,
         });
 
-        const [{ member_id: memberIdForAlarm }] =
-          await challengeCertificationModel.findMemberIdByChallengeCertificationId({
-            challengeCertificationId: submitResult.data.insertId,
-          });
+        const [{ member_id: memberIdForAlarm }] = await challengeModel.findOtherMemberByChallengeId({
+          memberId,
+          challengeId,
+        });
 
         // TODO: 새로운 인증 요청 알람을 상대방에게 전송한다.
         await alarmService.createCertificationAlarm({
