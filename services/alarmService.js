@@ -35,7 +35,11 @@ const alarmService = {
       challengeCertificationId,
     });
 
-    await alarmModel.createApproveAlarm({ challengeCertificationId });
+    const [{ member_id: memberId }] = await challengeCertificationModel.findMemberIdByChallengeCertificationId({
+      challengeCertificationId,
+    });
+
+    await alarmModel.createApproveAlarm({ memberId, challengeCertificationId });
 
     return result;
   },
@@ -45,13 +49,17 @@ const alarmService = {
       challengeCertificationId,
     });
 
-    await alarmModel.createRejectAlarm({ challengeCertificationId });
+    const [{ member_id: memberId }] = await challengeCertificationModel.findMemberIdByChallengeCertificationId({
+      challengeCertificationId,
+    });
+
+    await alarmModel.createRejectAlarm({ memberId, challengeCertificationId });
 
     return result;
   },
 
-  createCertificationAlarm: async ({ challengeCertificationId }) => {
-    const result = await alarmModel.createCertificationAlarm({ challengeCertificationId });
+  createCertificationAlarm: async ({ memberId, challengeCertificationId }) => {
+    const result = await alarmModel.createCertificationAlarm({ memberId, challengeCertificationId });
 
     return result;
   },
