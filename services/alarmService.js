@@ -35,6 +35,8 @@ const alarmService = {
       challengeCertificationId,
     });
 
+    await alarmModel.createApproveAlarm({ challengeCertificationId });
+
     return result;
   },
 
@@ -42,6 +44,14 @@ const alarmService = {
     const result = await challengeCertificationModel.rejectChallengeCertification({
       challengeCertificationId,
     });
+
+    await alarmModel.createRejectAlarm({ challengeCertificationId });
+
+    return result;
+  },
+
+  createCertificationAlarm: async ({ challengeCertificationId }) => {
+    const result = await alarmModel.createCertificationAlarm({ challengeCertificationId });
 
     return result;
   },
