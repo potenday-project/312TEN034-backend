@@ -1,6 +1,7 @@
 const { challengeService } = require('../services/challengeService');
 const { alarmService } = require('../services/alarmService');
 const { getUserIdFromJwt } = require('../utils/jwt');
+const { getUserChampionFromJwt } = require('../utils/jwt');
 
 const challengeController = {
   createChallenge: async (req, res) => {
@@ -78,6 +79,8 @@ const challengeController = {
   getInProgressChallenge: async (req, res) => {
     const { id: challengeId } = req.params;
 
+    const myId = await getUserIdFromJwt(req.headers.authorization);
+
     const result = await challengeService.getInProgressChallenge({
       challengeId,
     });
@@ -87,6 +90,7 @@ const challengeController = {
         success: true,
         message: '챌린지 조회 요청에 성공했습니다.',
         data: result.data,
+        myId,
       });
     } else {
       return res.status(400).json({
