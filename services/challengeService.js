@@ -60,15 +60,15 @@ const challengeService = {
   },
   getUpcomingChallenge: async ({ challengeId }) => {
     try {
-      const result = await challengeModel.getUpcomingChallenge({
+      const result = await challengeModel.getChallengeOwner({
         challengeId,
       });
 
+      console.log(result);
+
       return {
         success: true,
-        data: {
-          challenge: result,
-        },
+        data: result,
       };
     } catch (error) {
       return {
