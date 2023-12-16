@@ -119,6 +119,7 @@ const challengeService = {
         memberId,
         challengeId,
       });
+      console.log('result', result);
 
       return {
         success: true,
