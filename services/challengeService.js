@@ -168,8 +168,6 @@ const challengeService = {
         memberId,
       });
 
-      console.log(result);
-
       return {
         success: true,
         data: result,
@@ -190,10 +188,12 @@ const challengeService = {
         challengeModel.findCertificatedCountByMemberId({ memberId }),
       ]);
 
+      console.log(user);
+
       return {
         success: true,
         data: {
-          champion: user.champion,
+          champion: user[0].champion,
           explorationCount: explorationCount[0]['COUNT(DISTINCT cT.id)'],
           certificatedCount: certificatedCount[0]['COUNT(DISTINCT cT.id)'],
         },
