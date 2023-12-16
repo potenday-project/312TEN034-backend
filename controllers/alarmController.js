@@ -47,10 +47,11 @@ const alarmController = {
     }
   },
   approveAlarm: async (req, res) => {
-    const { challengeCertificationId } = req.body;
+    const { alarmId, challengeCertificationId } = req.body;
 
     try {
       await alarmService.approveChallengeCertification({
+        alarmId,
         challengeCertificationId,
       });
 
@@ -67,10 +68,11 @@ const alarmController = {
     }
   },
   rejectAlarm: async (req, res) => {
-    const { challengeCertificationId } = req.body;
+    const { alarmId, challengeCertificationId } = req.body;
 
     try {
       await alarmService.rejectChallengeCertification({
+        alarmId,
         challengeCertificationId,
       });
 

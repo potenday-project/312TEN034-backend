@@ -85,11 +85,18 @@ router.get('/new', alarmController.getNewAlarmExist);
  *             schema:
  *               type: object
  *               properties:
+ *                 alarmId:
+ *                   type: integer
+ *                   description: "알람의 ID"
+ *                   example: 123
  *                 challengeCertificationId:
  *                   type: integer
+ *                   description: "인증 요청 알람의 challengeCertificationId"
+ *                   example: 456
  *               required:
+ *                 - alarmId
  *                 - challengeCertificationId
- *               description: "인증 요청 알람의 challengeCertificationId"
+ *               description: "알람 및 인증 요청에 필요한 정보"
  *       responses:
  *         "200":
  *           description: "상대방 인증 요청 알람 승인 요청에 성공했습니다."
@@ -103,7 +110,6 @@ router.get('/new', alarmController.getNewAlarmExist);
  *                   message:
  *                     type: string
  */
-
 router.post('/approve', alarmController.approveAlarm);
 
 /**
@@ -127,14 +133,21 @@ router.post('/approve', alarmController.approveAlarm);
  *             schema:
  *               type: object
  *               properties:
+ *                 alarmId:
+ *                   type: integer
+ *                   description: "알람의 ID"
+ *                   example: 123
  *                 challengeCertificationId:
  *                   type: integer
+ *                   description: "인증 요청 알람의 challengeCertificationId"
+ *                   example: 456
  *               required:
+ *                 - alarmId
  *                 - challengeCertificationId
- *               description: "인증 요청 알람의 challengeCertificationId"
+ *               description: "알람 및 인증 요청에 필요한 정보"
  *       responses:
  *         "200":
- *           description: "상대방 인증 요청 알람 승인 거절에 성공했습니다."
+ *           description: "상대방 인증 요청 알람 거절에 성공했습니다."
  *           content:
  *             application/json:
  *               schema:
