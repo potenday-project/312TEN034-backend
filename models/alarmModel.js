@@ -64,7 +64,7 @@ const alarmModel = {
 
     try {
       const [rows, fields] = await connection.query(
-        'INSERT INTO alarm (memberId, challenge_certification_id, alarm_type) VALUES (?, ?, "SUCCESS")',
+        'INSERT INTO alarm (member_id, challenge_certification_id, alarm_type) VALUES (?, ?, "SUCCESS")',
         [memberId, challengeCertificationId]
       );
 
