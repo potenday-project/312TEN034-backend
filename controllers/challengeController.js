@@ -164,7 +164,7 @@ const challengeController = {
           participationCount: participationCount + 1,
         });
 
-        const [{ member_id: memberIdForAlarm }] = await challengeModel.findOtherMemberByChallengeId({
+        const [{ id: memberIdForAlarm }] = await challengeModel.findOtherMemberByChallengeId({
           memberId,
           challengeId,
         });
