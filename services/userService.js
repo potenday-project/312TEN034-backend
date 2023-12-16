@@ -54,6 +54,12 @@ const userService = {
 
     return result;
   },
+
+  getUserStatus: async (id) => {
+    const result = await userModel.getUserStatus(id);
+
+    return result;
+  },
 };
 
 module.exports = {

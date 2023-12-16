@@ -85,6 +85,30 @@ const userController = {
       });
     }
   },
+
+  getUserStatus: async (req, res) => {
+    const id = getUserIdFromJwt(req.headers.authorization);
+
+    try {
+      const result = await userService.getUserStatus(id);
+
+      return res.status(200).json({
+        success: true,
+        message: '프로필 조회에 성공했습니다.',
+        data: {
+          completedCount: result[0][0]['COUNT(m.id)'],
+          friendCount: result[1][0]['friendCount'],
+          startedCount: result[1][0]['startedCount'],
+        },
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        message: '프로필 조회에 실패했습니다.',
+        err: err,
+      });
+    }
+  },
 };
 
 module.exports = {

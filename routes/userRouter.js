@@ -150,4 +150,34 @@ router.post('/signUp', userController.signUp);
  */
 router.get('/', userController.getUserProfile);
 
+/**
+ * @swagger
+ * paths:
+ *    /api/users/status:
+ *      get:
+ *          tags: [Users]
+ *          summary: "유저 프로필 상태 조회"
+ *          description: "유저 프로필 상태 조회"
+ *          parameters:
+ *            - name: "Authorization"
+ *              in: "header"
+ *              description: "Access Token"
+ *              required: true
+ *              schema:
+ *                type: "string"
+ *          responses:
+ *              "200":
+ *                  description: "유저 프로필 상태 조회에 성공했습니다."
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                  message:
+ *                                      type: string
+ */
+router.get('/status', userController.getUserStatus);
+
 module.exports = router;
