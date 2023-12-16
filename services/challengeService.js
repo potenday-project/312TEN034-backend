@@ -64,8 +64,6 @@ const challengeService = {
         challengeId,
       });
 
-      console.log(result);
-
       return {
         success: true,
         data: result,
