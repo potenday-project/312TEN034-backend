@@ -193,7 +193,7 @@ const challengeService = {
       return {
         success: true,
         data: {
-          champion: user[0].champion,
+          champion: user.champion,
           explorationCount: explorationCount[0]['COUNT(DISTINCT cT.id)'],
           certificatedCount: certificatedCount[0]['COUNT(DISTINCT cT.id)'],
         },
