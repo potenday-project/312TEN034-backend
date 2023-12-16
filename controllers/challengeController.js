@@ -163,7 +163,10 @@ const challengeController = {
         });
 
         // TODO: 새로운 인증 요청 알람을 상대방에게 전송한다.
-        await alarmService.createCertificationAlarm({ challengeCertificationId: submitResult.data.insertId });
+        await alarmService.createCertificationAlarm({
+          memberId,
+          challengeCertificationId: submitResult.data.insertId,
+        });
 
         if (submitResult.success) {
           // 새로운 인증 요청이므로 participation_count를 1 증가시키고, is_authenticate를 NULL로 넣고 생성한다.

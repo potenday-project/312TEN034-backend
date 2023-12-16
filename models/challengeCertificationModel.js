@@ -113,6 +113,20 @@ const challengeCertificationModel = {
       connection.release();
     }
   },
+
+  findMemberIdByChallengeCertificationId: async ({ challengeCertificationId }) => {
+    const connection = await pool.getConnection();
+
+    try {
+      const [rows, fields] = await connection.query(
+        `SELECT member_id FROM challenge_certification WHERE id = ${challengeCertificationId}`
+      );
+
+      return rows;
+    } finally {
+      connection.release();
+    }
+  },
 };
 
 module.exports = {

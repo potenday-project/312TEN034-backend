@@ -42,13 +42,13 @@ const alarmModel = {
     }
   },
 
-  createCertificationAlarm: async ({ challengeCertificationId }) => {
+  createCertificationAlarm: async ({ memberId, challengeCertificationId }) => {
     const connection = await pool.getConnection();
 
     try {
       const [rows, fields] = await connection.query(
-        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "REQUEST")',
-        [challengeCertificationId]
+        'INSERT INTO alarm (memberId, challenge_certification_id, alarm_type) VALUES (?, ?, "REQUEST")',
+        [memberId, challengeCertificationId]
       );
 
       return rows;
@@ -57,13 +57,13 @@ const alarmModel = {
     }
   },
 
-  createApproveAlarm: async ({ challengeCertificationId }) => {
+  createApproveAlarm: async ({ memberId, challengeCertificationId }) => {
     const connection = await pool.getConnection();
 
     try {
       const [rows, fields] = await connection.query(
-        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "SUCCESS")',
-        [challengeCertificationId]
+        'INSERT INTO alarm (memberId, challenge_certification_id, alarm_type) VALUES (?, ?, "SUCCESS")',
+        [memberId, challengeCertificationId]
       );
 
       return rows;
@@ -72,13 +72,13 @@ const alarmModel = {
     }
   },
 
-  createRejectAlarm: async ({ challengeCertificationId }) => {
+  createRejectAlarm: async ({ memberId, challengeCertificationId }) => {
     const connection = await pool.getConnection();
 
     try {
       const [rows, fields] = await connection.query(
-        'INSERT INTO alarm (challenge_certification_id, alarm_type) VALUES (?, "FAIL")',
-        [challengeCertificationId]
+        'INSERT INTO alarm (memberId, challenge_certification_id, alarm_type) VALUES (?, ?, "RE-REQUEST")',
+        [memberId, challengeCertificationId]
       );
 
       return rows;
